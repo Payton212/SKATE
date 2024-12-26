@@ -1,0 +1,22 @@
+header{
+    display:flex;
+    justify-content: center;
+    color: white;
+    background-color: black;
+    font-size: 40px;
+}
+h1{
+    margin:1%;
+}
+h2,h3,h4,h5,h6{
+    font-size: 30px;
+    margin: 3%;
+}
+.section{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+body{
+    margin:0;
+}
