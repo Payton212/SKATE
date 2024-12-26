@@ -6,16 +6,51 @@ header{
     font-size: 40px;
 }
 h1{
-    margin:1%;
+    margin:1% 0% 1% 0%;
 }
-h2,h3,h4,h5,h6{
+h2,h3,h4,h5,h6,h7{
     font-size: 30px;
     margin: 3%;
 }
 .section{
+    margin-top: 1%;
     display:flex;
     flex-direction: row;
     justify-content: space-around;
+}
+#trick-class{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap:wrap;
+    flex-direction: column;
+    padding-bottom: 2%;
+    border:2px solid black;
+    min-width: 15%;
+    max-width: 15%;
+  
+}
+.generated-trick{
+    display: flex;
+    justify-content: center;
+}
+#generated-trick{
+    border:2px solid black;
+    padding-bottom: 6%;
+    margin-top: 2%;
+    min-width: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+.button{
+    display: flex;
+    justify-content: center;
+}
+p{
+    font-size: 30px;
+}
+button{
+margin-top: 3%;
 }
 body{
     margin:0;
