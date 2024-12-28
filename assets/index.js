@@ -29,34 +29,24 @@ let namedTrick;
 gt.addEventListener("click", function (event) {
   event.preventDefault();
   if (dEasy.checked === true) {
+    
     let newTrick = easy(skateConfig);
-    console.log(completedTricks);
-    if(newTrick.stance === 'regular' && newTrick.direction === 'frontside' && newTrick.rotation === '180' && newTrick.shuv === 'none' && newTrick.flip === 'none'){
-         namedTrick = 'front 180';
-    }else if(newTrick.stance === 'regular' && newTrick.direction === 'frontside' && newTrick.rotation === 'none' && newTrick.shuv === '180' && newTrick.flip === 'none'){
-        namedTrick = 'front shuv';    
-    }else if(newTrick.stance === 'regular' && newTrick.direction === 'backside' && newTrick.rotation === '180' && newTrick.shuv === 'none' && newTrick.flip === 'none'){
-        namedTrick = 'back 180';
-    }else if(newTrick.stance === 'regular' && newTrick.direction === 'backside' && newTrick.rotation === 'none' && newTrick.shuv === '180' && newTrick.flip === 'none'){
-        namedTrick = 'back shuv';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'frontside' && newTrick.rotation === '180' && newTrick.shuv === 'none' && newTrick.flip === 'none'){
-        namedTrick = 'frontside half cab';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'frontside' && newTrick.rotation === 'none' && newTrick.shuv === '180' && newTrick.flip === 'none'){
-        namedTrick = 'fakie front shuv';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'backside' && newTrick.rotation === '180' && newTrick.shuv === 'none' && newTrick.flip === 'none'){
-        namedTrick = 'half cab';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'backside' && newTrick.rotation === 'none' && newTrick.shuv === '180' && newTrick.flip === 'none'){
-        namedTrick = 'fakie back shuv';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'none' && newTrick.rotation === 'none' && newTrick.shuv === 'none' && newTrick.flip === 'kickflip'){
-        namedTrick = 'fakie kickflip';
-    }else if(newTrick.stance === 'fakie' && newTrick.direction === 'none' && newTrick.rotation === 'none' && newTrick.shuv === 'none' && newTrick.flip === 'heelflip'){
-        namedTrick = 'fakie heelflip';
-    }else if(newTrick.stance === 'regular' && newTrick.direction === 'none' && newTrick.rotation === 'none' && newTrick.shuv === 'none' && newTrick.flip === 'kickflip'){
-        namedTrick = 'kickflip';
-    }else if(newTrick.stance === 'regular' && newTrick.direction === 'none' && newTrick.rotation === 'none' && newTrick.shuv === 'none' && newTrick.flip === 'heelflip'){
-        namedTrick = 'heelflip';
-    } 
+    trickMapper = {
+    'regular_frontside_180_none_none':'front 180',
+    'regular_frontside_none_180_none':'front shuv',
+    'regular_backside_180_none_none':'back 180',
+    'regular_backside_none_180_none': 'pop shuv',
+    'fakie_frontside_180_none_none':'frontside half cab',
+    'fakie_frontside_none_180_none':'fakie front shuv',
+    'fakie_backside_180_none_none':'half cab',
+    'fakie_backside_none_180_none': 'fakie pop shuv',
+    'fakie_none_none_none_kickflip':'fakie kickflip',
+    'regular_none_none_none_kickflip':'kickflip',
+    'fakie_none_none_none_heelflip':'fakie heelflip',
+    'regular_none_none_none_heelflip':'heelflip'
+    }
 
+    namedTrick = trickMapper[`${newTrick.stance}_${newTrick.direction}_${newTrick.rotation}_${newTrick.shuv}_${newTrick.flip}`];
     
     nt.textContent = namedTrick;
     pst.textContent = newTrick.stance;
@@ -65,8 +55,6 @@ gt.addEventListener("click", function (event) {
     ps.textContent = newTrick.shuv;
     pKH.textContent = newTrick.flip
 
-
-    
   } else if (dMedium.checked === true) {
     medium();
   } else {
