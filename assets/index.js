@@ -9,11 +9,19 @@ const pr = document.getElementById('rotation');
 const pKH = document.getElementById('K/H');
 const ps = document.getElementById('shuv');
 
-let stances = ["regular", "switch", "fakie", "nollie"];
-let directions = ["frontside", "backside", "none"];
-let flips = ["kickflip", "heelflip", "none"];
-let rotations = ["180", "360", "none"];
-let shuvs = ["180", "360", "none"];
+
+skateConfig = {
+    easy:{
+        stances:['regular', 'fakie'],
+        directions:['frontside','backside'],
+        flips:['kickflip','heelflip','none'],
+        rotations:['180','none'],
+        shuvs:['180','none'],
+    },
+    medium:{},
+    hard:{},
+}
+
 let completedTricks = [];
 let namedTrick;
 
@@ -21,7 +29,7 @@ let namedTrick;
 gt.addEventListener("click", function (event) {
   event.preventDefault();
   if (dEasy.checked === true) {
-    let newTrick = easy();
+    let newTrick = easy(skateConfig);
     console.log(completedTricks);
     if(newTrick.stance === 'regular' && newTrick.direction === 'frontside' && newTrick.rotation === '180' && newTrick.shuv === 'none' && newTrick.flip === 'none'){
          namedTrick = 'front 180';
@@ -66,21 +74,16 @@ gt.addEventListener("click", function (event) {
   }
 });
 
-function easy() {
-  let stances = ["regular", "fakie"];
-  let directions = ["frontside", "backside"];
-  let rotations = ["180", "none"];
-  let flips = ['kickflip', 'heelflip', 'none'];
-  let shuvs = ['180','none'];
+function easy(skateConfig) {
   if(completedTricks.length === 12){
     return `all tricks generated`
   }else 
   do {
-    randomStance = gRandom(stances);
-    randomDirection = gRandom(directions);
-    randomRotation = gRandom(rotations);
-    randomFlip = gRandom(flips);
-    randomShuvs = gRandom(shuvs)
+    randomStance = gRandom(skateConfig.easy.stances);
+    randomDirection = gRandom(skateConfig.easy.directions);
+    randomRotation = gRandom(skateConfig.easy.rotations);
+    randomFlip = gRandom(skateConfig.easy.flips);
+   // randomShuvs = gRandom(skateConfig.easy.shuvs)
     // Determine shuv based on rotation
     if (randomFlip !== 'none') {
       randomShuvs = 'none'
@@ -89,7 +92,7 @@ function easy() {
     } else if (randomFlip === 'none' && randomRotation === 'none'){
         randomShuvs = '180';
     }else if(randomFlip === 'none' && randomRotation === '180'){
-        randomShuvs = 'none'
+        randomShuvs = 'none';
     }
    }while (completedTricks.some(trick => 
     trick.flip === randomFlip &&
