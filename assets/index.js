@@ -14,7 +14,7 @@ skateConfig = {
     easy:{
         stances:['regular', 'fakie'],
         directions:['frontside','backside'],
-        flips:['kickflip','heelflip','none'],
+        flips:['kickflip','heelflip','none','none'],
         rotations:['180','none'],
         shuvs:['180','none'],
     },
