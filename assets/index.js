@@ -17,9 +17,6 @@ let shuvs = ["180", "360", "none"];
 let completedTricks = [];
 let namedTrick;
 
-window.onload = function () {
-  dEasy.checked = true;
-};
 
 gt.addEventListener("click", function (event) {
   event.preventDefault();
@@ -79,11 +76,11 @@ function easy() {
     return `all tricks generated`
   }else 
   do {
-    randomStance = gRandomStance(stances);
-    randomDirection = gRandomDirection(directions);
-    randomRotation = gRandomRotations(rotations);
-    randomFlip = gRandomFlip(flips);
-    randomShuvs = gRandomShuvs(shuvs)
+    randomStance = gRandom(stances);
+    randomDirection = gRandom(directions);
+    randomRotation = gRandom(rotations);
+    randomFlip = gRandom(flips);
+    randomShuvs = gRandom(shuvs)
     // Determine shuv based on rotation
     if (randomFlip !== 'none') {
       randomShuvs = 'none'
@@ -122,19 +119,8 @@ function medium() {}
 
 function hard() {}
 
-function gRandomStance(stances) {
-  return stances[Math.floor(Math.random() * stances.length)];
+function gRandom(trick) {
+  return trick[Math.floor(Math.random() * trick.length)];
 }
-function gRandomDirection(directions) {
-  return directions[Math.floor(Math.random() * directions.length)];
-}
-function gRandomRotations(rotations) {
-  return rotations[Math.floor(Math.random() * rotations.length)];
-}
-function gRandomShuvs(shuvs) {
-  return shuvs[Math.floor(Math.random() * shuvs.length)];
-}
-function gRandomFlip(flips){
-  return flips[Math.floor(Math.random() * flips.length)];
-}
+
 
