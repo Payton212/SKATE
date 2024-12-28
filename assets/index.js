@@ -21,17 +21,7 @@ skateConfig = {
     medium:{},
     hard:{},
 }
-
-let completedTricks = [];
-let namedTrick;
-
-
-gt.addEventListener("click", function (event) {
-  event.preventDefault();
-  if (dEasy.checked === true) {
-    
-    let newTrick = easy(skateConfig);
-    trickMapper = {
+const trickMapper = {
     'regular_frontside_180_none_none':'front 180',
     'regular_frontside_none_180_none':'front shuv',
     'regular_backside_180_none_none':'back 180',
@@ -45,6 +35,16 @@ gt.addEventListener("click", function (event) {
     'fakie_none_none_none_heelflip':'fakie heelflip',
     'regular_none_none_none_heelflip':'heelflip'
     }
+let completedTricks = [];
+let namedTrick;
+
+
+gt.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (dEasy.checked === true) {
+    
+    let newTrick = easy(skateConfig);
+    console.log(completedTricks)
 
     namedTrick = trickMapper[`${newTrick.stance}_${newTrick.direction}_${newTrick.rotation}_${newTrick.shuv}_${newTrick.flip}`];
     
@@ -65,45 +65,8 @@ gt.addEventListener("click", function (event) {
 function easy(skateConfig) {
   if(completedTricks.length === 12){
     return `all tricks generated`
-  }else 
-  do {
-    randomStance = gRandom(skateConfig.easy.stances);
-    randomDirection = gRandom(skateConfig.easy.directions);
-    randomRotation = gRandom(skateConfig.easy.rotations);
-    randomFlip = gRandom(skateConfig.easy.flips);
-   // randomShuvs = gRandom(skateConfig.easy.shuvs)
-    // Determine shuv based on rotation
-    if (randomFlip !== 'none') {
-      randomShuvs = 'none'
-      randomRotation = 'none'
-      randomDirection = 'none';
-    } else if (randomFlip === 'none' && randomRotation === 'none'){
-        randomShuvs = '180';
-    }else if(randomFlip === 'none' && randomRotation === '180'){
-        randomShuvs = 'none';
-    }
-   }while (completedTricks.some(trick => 
-    trick.flip === randomFlip &&
-    trick.stance === randomStance && 
-    trick.direction === randomDirection &&  
-    trick.rotation === randomRotation &&
-    trick.shuv === randomShuvs
-  ));
-
-    completedTricks.push ({
-      stance: randomStance,
-      direction: randomDirection,
-      rotation: randomRotation,
-      shuv: randomShuvs,
-      flip: randomFlip,
-    });
-    return {
-        stance: randomStance,
-        direction: randomDirection,
-        rotation: randomRotation,
-        shuv: randomShuvs,
-        flip: randomFlip,
-      };
+  }
+    return generateUniqueSkateConfig(skateConfig.easy);
 }
 
 function medium() {}
@@ -114,4 +77,56 @@ function gRandom(skateConfig) {
   return skateConfig[Math.floor(Math.random() * skateConfig.length)];
 }
 
+function generateUniqueSkateConfig(config){
+    let randomConfig;
+    do{
+        randomConfig = randomGenerator(config);
+    }while(checkIfTrickHasBeenDone(randomConfig));
 
+    return randomConfig;
+}
+
+function randomGenerator(config){
+    randomStance = gRandom(config.stances);
+    randomDirection = gRandom(config.directions);
+    randomRotation = gRandom(config.rotations);
+    randomFlip = gRandom(config.flips);
+    // Determine shuv based on rotation
+    if (randomFlip !== 'none') {
+      randomShuvs = 'none'
+      randomRotation = 'none'
+      randomDirection = 'none';
+    } else if (randomFlip === 'none' && randomRotation === 'none'){
+        randomShuvs = '180';
+    }else if(randomFlip === 'none' && randomRotation === '180'){
+        randomShuvs = 'none';
+    }
+    completedTricks.push ({
+        stance: randomStance,
+        direction: randomDirection,
+        rotation: randomRotation,
+        shuv: randomShuvs,
+        flip: randomFlip,
+      });
+    return {
+        stance: randomStance,
+        direction: randomDirection,
+        rotation: randomRotation,
+        shuv: randomShuvs,
+        flip: randomFlip,
+      };
+}
+
+function checkIfTrickHasBeenDone(randomConfig){
+    (completedTricks.some(trick => 
+        trick.flip === randomConfig.randomFlip &&
+        trick.stance === randomConfig.randomStance && 
+        trick.direction === randomConfig.randomDirection &&  
+        trick.rotation === randomConfig.randomRotation &&
+        trick.shuv === randomConfig.randomShuvs
+      ));
+   
+}
+/*
+
+    */ 
