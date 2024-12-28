@@ -119,8 +119,8 @@ function medium() {}
 
 function hard() {}
 
-function gRandom(trick) {
-  return trick[Math.floor(Math.random() * trick.length)];
+function gRandom(skateConfig) {
+  return skateConfig[Math.floor(Math.random() * skateConfig.length)];
 }
 
 
