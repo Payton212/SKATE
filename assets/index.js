@@ -14,25 +14,32 @@ skateConfig = {
     easy:{
         stances:['regular', 'fakie'],
         directions:['frontside','backside'],
-        flips:['kickflip','heelflip','none','none'],
+        flips:['kickflip','heelflip','none'],
         rotations:['180','none'],
         shuvs:['180','none'],
     },
-    medium:{},
+    medium:{
+        stances:['regular','fakie'],
+        directions:['frontside','backside'],
+        flips:['kickflip','heelflip','none','none'],
+        rotations:['180','none'],
+        shuvs:['180','none']
+    },
     hard:{},
 }
 const trickMapper = {
+    // stance_direction_rotation_shuv_flip
     'regular_frontside_180_none_none':'front 180',
     'regular_frontside_none_180_none':'front shuv',
-    'regular_backside_180_none_none':'back 180',
-    'regular_backside_none_180_none': 'pop shuv',
-    'fakie_frontside_180_none_none':'frontside half cab',
-    'fakie_frontside_none_180_none':'fakie front shuv',
-    'fakie_backside_180_none_none':'half cab',
-    'fakie_backside_none_180_none': 'fakie pop shuv',
-    'fakie_none_none_none_kickflip':'fakie kickflip',
+    'regular_backside_180_none_none' :'back 180',
+    'regular_backside_none_180_none' :'pop shuv',
+    'fakie_frontside_180_none_none'  :'frontside half cab',
+    'fakie_frontside_none_180_none'  :'fakie front shuv',
+    'fakie_backside_180_none_none'   :'half cab',
+    'fakie_backside_none_180_none'   :'fakie pop shuv',
+    'fakie_none_none_none_kickflip'  :'fakie kickflip',
     'regular_none_none_none_kickflip':'kickflip',
-    'fakie_none_none_none_heelflip':'fakie heelflip',
+    'fakie_none_none_none_heelflip'  :'fakie heelflip',
     'regular_none_none_none_heelflip':'heelflip'
     }
 let completedTricks = [];
@@ -56,7 +63,17 @@ gt.addEventListener("click", function (event) {
     pKH.textContent = newTrick.flip
 
   } else if (dMedium.checked === true) {
-    medium();
+   let newTrick = medium(skateConfig);
+   console.log(completedTricks)
+
+   namedTrick = trickMapper[`${newTrick.stance}_${newTrick.direction}_${newTrick.rotation}_${newTrick.shuv}_${newTrick.flip}`];
+
+    nt.textContent = namedTrick;
+    pst.textContent = newTrick.stance;
+    pd.textContent = newTrick.direction;
+    pr.textContent = newTrick.rotation;
+    ps.textContent = newTrick.shuv;
+    pKH.textContent = newTrick.flip
   } else {
     hard();
   }
@@ -66,10 +83,12 @@ function easy(skateConfig) {
   if(completedTricks.length === 12){
     return `all tricks generated`
   }
-    return generateUniqueSkateConfig(skateConfig.easy);
+    return easyGenerateUniqueSkateConfig(skateConfig.easy);
 }
 
-function medium() {}
+function medium(skateConfig) {
+    return mediumGenerateUniqueSkateConfig(skateConfig.medium);
+}
 
 function hard() {}
 
@@ -77,30 +96,30 @@ function gRandom(skateConfig) {
   return skateConfig[Math.floor(Math.random() * skateConfig.length)];
 }
 
-function generateUniqueSkateConfig(config){
+function easyGenerateUniqueSkateConfig(config){
     let randomConfig;
     do{
-        randomConfig = randomGenerator(config);
+        randomConfig = easyRandomGenerator(config);
     }while(checkIfTrickHasBeenDone(randomConfig));
 
     return randomConfig;
 }
 
-function randomGenerator(config){
+function easyRandomGenerator(config){
     randomStance = gRandom(config.stances);
     randomDirection = gRandom(config.directions);
     randomRotation = gRandom(config.rotations);
     randomFlip = gRandom(config.flips);
     // Determine shuv based on rotation
     if (randomFlip !== 'none') {
-      randomShuvs = 'none'
-      randomRotation = 'none'
-      randomDirection = 'none';
-    } else if (randomFlip === 'none' && randomRotation === 'none'){
-        randomShuvs = '180';
-    }else if(randomFlip === 'none' && randomRotation === '180'){
-        randomShuvs = 'none';
-    }
+        randomShuvs = 'none'
+        randomRotation = 'none'
+        randomDirection = 'none';
+      } else if (randomFlip === 'none' && randomRotation === 'none'){
+          randomShuvs = '180';
+      }else if(randomFlip === 'none' && randomRotation === '180'){
+          randomShuvs = 'none';
+      }
     completedTricks.push ({
         stance: randomStance,
         direction: randomDirection,
@@ -115,6 +134,47 @@ function randomGenerator(config){
         shuv: randomShuvs,
         flip: randomFlip,
       };
+      
+}
+function mediumGenerateUniqueSkateConfig(config){
+    let randomConfig;
+    do{
+        randomConfig = mediumRandomGenerator(config);
+    }while(checkIfTrickHasBeenDone(randomConfig));
+
+    return randomConfig;
+}
+
+function mediumRandomGenerator(config){
+    randomStance = gRandom(config.stances);
+    randomDirection = gRandom(config.directions);
+    randomRotation = gRandom(config.rotations);
+    randomFlip = gRandom(config.flips);
+    randomShuvs = gRandom(config.shuvs);
+    // Determine shuv based on rotation
+    
+    if(randomShuvs === 'none' && randomRotation === 'none'){
+        randomDirection = 'none';
+        randomFlip != 'none';
+    } if(randomShuvs !== 'none' && randomRotation !== 'none'){
+        randomFlip = 'none';
+    }
+    
+    completedTricks.push ({
+        stance: randomStance,
+        direction: randomDirection,
+        rotation: randomRotation,
+        shuv: randomShuvs,
+        flip: randomFlip,
+      });
+    return {
+        stance: randomStance,
+        direction: randomDirection,
+        rotation: randomRotation,
+        shuv: randomShuvs,
+        flip: randomFlip,
+      };
+      
 }
 
 function checkIfTrickHasBeenDone(randomConfig){
@@ -127,6 +187,3 @@ function checkIfTrickHasBeenDone(randomConfig){
       ));
    
 }
-/*
-
-    */ 
