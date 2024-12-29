@@ -57,6 +57,10 @@ const trickMapper = {
     'fakie_backside_none_180_heelflip':'fakie inward heel',
     'fakie_frontside_none_180_kickflip':'fakie hard flip',
     'fakie_frontside_none_180_heelflip':'fakie varial heel',
+    'regular_backside_180_180_none':'big spin',
+    'regular_frontside_180_180_none':'frontside big spin',
+    'fakie_backside_180_180_none':'fakie big spin',
+    'fakie_frontside_180_180_none':'fakie frontside big spin',
 
     }
 let completedTricks = [];
@@ -67,43 +71,55 @@ gt.addEventListener("click", function (event) {
   event.preventDefault();
   if (dEasy.checked === true) {
     
-    let newTrick = easy(skateConfig);
-    console.log(completedTricks)
+    let {stance, direction, rotation, shuv, flip} = easy(skateConfig);
 
-    namedTrick = trickMapper[`${newTrick.stance}_${newTrick.direction}_${newTrick.rotation}_${newTrick.shuv}_${newTrick.flip}`];
+    
+
+    namedTrick = trickMapper[`${stance}_${direction}_${rotation}_${shuv}_${flip}`];
     
     nt.textContent = namedTrick;
-    pst.textContent = newTrick.stance;
-    pd.textContent = newTrick.direction;
-    pr.textContent = newTrick.rotation;
-    ps.textContent = newTrick.shuv;
-    pKH.textContent = newTrick.flip
+    pst.textContent = stance;
+    pd.textContent = direction;
+    pr.textContent = rotation;
+    ps.textContent = shuv;
+    pKH.textContent = flip
 
   } else if (dMedium.checked === true) {
-   let newTrick = medium(skateConfig);
-   console.log(completedTricks)
+   let {stance, direction, rotation, shuv, flip} = medium(skateConfig);
+   console.log(completedTricks);
 
-   namedTrick = trickMapper[`${newTrick.stance}_${newTrick.direction}_${newTrick.rotation}_${newTrick.shuv}_${newTrick.flip}`];
-
+   namedTrick = trickMapper[`${stance}_${direction}_${rotation}_${shuv}_${flip}`];
+console.log(namedTrick);
     nt.textContent = namedTrick;
-    pst.textContent = newTrick.stance;
-    pd.textContent = newTrick.direction;
-    pr.textContent = newTrick.rotation;
-    ps.textContent = newTrick.shuv;
-    pKH.textContent = newTrick.flip
-  } else {
+    pst.textContent = stance;
+    pd.textContent = direction;
+    pr.textContent = rotation;
+    ps.textContent = shuv;
+    pKH.textContent = flip
+  
+  completedTricks.push ({
+    stance: randomStance,
+    direction: randomDirection,
+    rotation: randomRotation,
+    shuv: randomShuvs,
+    flip: randomFlip,
+  });
+}else {
     hard();
   }
 });
 
 function easy(skateConfig) {
-  if(completedTricks.length === 12){
+  if(completedTricks.length >= 12){
     return `all tricks generated`
   }
     return easyGenerateUniqueSkateConfig(skateConfig.easy);
 }
 
 function medium(skateConfig) {
+    if(completedTricks.length >= 32){
+        return `all tricks generated`
+      }
     return mediumGenerateUniqueSkateConfig(skateConfig.medium);
 }
 
@@ -177,13 +193,6 @@ function mediumRandomGenerator(config){
         randomFlip = 'none';
     }
     
-    completedTricks.push ({
-        stance: randomStance,
-        direction: randomDirection,
-        rotation: randomRotation,
-        shuv: randomShuvs,
-        flip: randomFlip,
-      });
     return {
         stance: randomStance,
         direction: randomDirection,
@@ -195,12 +204,22 @@ function mediumRandomGenerator(config){
 }
 
 function checkIfTrickHasBeenDone(randomConfig){
-    (completedTricks.some(trick => 
-        trick.flip === randomConfig.randomFlip &&
+   return (completedTricks.some(trick => 
+        (trick.flip === randomConfig.randomFlip &&
         trick.stance === randomConfig.randomStance && 
         trick.direction === randomConfig.randomDirection &&  
         trick.rotation === randomConfig.randomRotation &&
-        trick.shuv === randomConfig.randomShuvs
-      ));
-   
+        trick.shuv === randomConfig.randomShuvs) &&
+        (trick.stance === 'regular' &&
+        trick.direction === 'none'&&
+        trick.flip === 'none' &&
+        trick.rotation === 'none'&&
+        trick.shuv === 'none') &&
+        (trick.stance === 'fakie' &&
+        trick.direction === 'none'&&
+        trick.flip === 'none' &&
+        trick.rotation === 'none'&&
+        trick.shuv === 'none')
+     ));
+     
 }
