@@ -205,21 +205,20 @@ function mediumRandomGenerator(config){
 
 function checkIfTrickHasBeenDone(randomConfig){
    return (completedTricks.some(trick => 
-        (trick.flip === randomConfig.randomFlip &&
+        (
+            trick.flip === randomConfig.randomFlip &&
         trick.stance === randomConfig.randomStance && 
         trick.direction === randomConfig.randomDirection &&  
         trick.rotation === randomConfig.randomRotation &&
-        trick.shuv === randomConfig.randomShuvs) &&
-        (trick.stance === 'regular' &&
+        trick.shuv === randomConfig.randomShuvs
+        ) &&
+        (
         trick.direction === 'none'&&
         trick.flip === 'none' &&
         trick.rotation === 'none'&&
-        trick.shuv === 'none') &&
-        (trick.stance === 'fakie' &&
-        trick.direction === 'none'&&
-        trick.flip === 'none' &&
-        trick.rotation === 'none'&&
-        trick.shuv === 'none')
+        trick.shuv === 'none'
+        ) 
+     
      ));
      
 }
