@@ -14,14 +14,14 @@ skateConfig = {
     easy:{
         stances:['regular', 'fakie'],
         directions:['frontside','backside'],
-        flips:['kickflip','heelflip','none'],
+        flips:['kickflip','heelflip','none','none'],
         rotations:['180','none'],
         shuvs:['180','none'],
     },
     medium:{
         stances:['regular','fakie'],
         directions:['frontside','backside'],
-        flips:['kickflip','heelflip','none','none'],
+        flips:['kickflip','heelflip','none'],
         rotations:['180','none'],
         shuvs:['180','none']
     },
@@ -40,7 +40,24 @@ const trickMapper = {
     'fakie_none_none_none_kickflip'  :'fakie kickflip',
     'regular_none_none_none_kickflip':'kickflip',
     'fakie_none_none_none_heelflip'  :'fakie heelflip',
-    'regular_none_none_none_heelflip':'heelflip'
+    'regular_none_none_none_heelflip':'heelflip',
+    'regular_frontside_180_none_kickflip':'frontside flip',
+    'fakie_frontside_180_none_kickflip':'fakie frontside flip',
+    'regular_backside_180_none_kickflip':'backside flip',
+    'fakie_backside_180_none_kickflip':'half cab flip',
+    'regular_frontside_180_none_heelflip':'frontside heel',
+    'fakie_frontside_180_none_heelflip':'fakie front heel',
+    'fakie_backside_180_none_heelflip':'half cab heel',
+    'regular_backside_180_none_heelflip':'backside heelflip',
+    'regular_backside_none_180_kickflip':'varial flip',
+    'regular_backside_none_180_heelflip':'inward heel',
+    'regular_frontside_none_180_kickflip':'hard flip',
+    'regular_frontside_none_180_heelflip':'varial heel',
+    'fakie_backside_none_180_kickflip':'fakie varial flip',
+    'fakie_backside_none_180_heelflip':'fakie inward heel',
+    'fakie_frontside_none_180_kickflip':'fakie hard flip',
+    'fakie_frontside_none_180_heelflip':'fakie varial heel',
+
     }
 let completedTricks = [];
 let namedTrick;
