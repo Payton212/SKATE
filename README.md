@@ -27,6 +27,9 @@ After clicking the "Generate Trick" button, I want to receive:
 - The obstacle where the trick should be attempted.
 
 
+
+
+
 ## Checklist
 
 - [ ] Users are presented with a settings page where they can choose:  
