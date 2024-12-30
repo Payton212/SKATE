@@ -1,82 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SKATE</title>
-    <link rel = "stylesheet" href = "assets/style.css"/>
-</head>
-<body>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
     <header>
-        <h1 id = "S">S</h1><h1 id = "K">K</h1><h1 id = "A">A</h1><h1 id = "T">T</h1><h1 id = "E">E</h1>
+      <h1 id="S">S</h1>
+      <h1 id="K">K</h1>
+      <h1 id="A">A</h1>
+      <h1 id="T">T</h1>
+      <h1 id="E">E</h1>
     </header>
     <section>
-        <ul>
-            <h8>Diffuculty</h8>
-            <div>
-                <label for = "easy">
-                <input type = "radio" name = "difficulty" value = "easy" id = "easy" checked/> Easy </label>
-            </div>
-            
-            <div>
-                <label for = "medium">
-                    <input type = "radio" name = "difficulty" value = "medium" id = "medium"/>Medium </label>
-            </div>
+      <ul>
+        <h8>Diffuculty</h8>
+        <div>
+          <label for="easy">
+            <input
+              type="radio"
+              name="difficulty"
+              value="easy"
+              id="easy"
+              checked
+            />
+            Easy
+          </label>
+        </div>
 
-            <div>
-                <label for = "hard">
-                    <input type = "radio" name = "difficulty" value = "hard" id = "hard"/>Hard </label>
-            </div>
-        </ul>
-        
+        <div>
+          <label for="medium">
+            <input
+              type="radio"
+              name="difficulty"
+              value="medium"
+              id="medium"
+            />Medium
+          </label>
+        </div>
+
+        <div>
+          <label for="hard">
+            <input type="radio" name="difficulty" value="hard" id="hard" /> Hard
+          </label>
+        </div>
+      </ul>
     </section>
-    
-<section class = "section">
-    <div id = "trick-class">
+
+    <section class="section">
+      <div id="trick-class">
         <h2>Stance</h2>
         <div>
-            <p id = "stance"></p>
+          <p id="stance"></p>
         </div>
-    </div>
-    <div id = "trick-class">
+      </div>
+      <div id="trick-class">
         <h3>direction</h3>
         <div>
-            <p id = "direction"></p>
+          <p id="direction"></p>
         </div>
-    </div>
-    <div id = "trick-class">
-        <h4>K  /  H</h4>
+      </div>
+      <div id="trick-class">
+        <h4>K / H</h4>
         <div>
-            <p id = "K/H"></p>
+          <p id="K/H"></p>
         </div>
-    </div>
-    <div id = "trick-class">
+      </div>
+      <div id="trick-class">
         <h5>rotation</h5>
         <div>
-            <p id = "rotation"></p>
+          <p id="rotation"></p>
         </div>
-    </div>
-    <div id = "trick-class">
+      </div>
+      <div id="trick-class">
         <h6>shuvs</h6>
         <div>
-            <p id = "shuv"></p>
+          <p id="shuv"></p>
         </div>
-    </div>
-</section>
-<section class = "generated-trick">
-
-
-    <div id = "generated-trick">
+      </div>
+    </section>
+    <section class="generated-trick">
+      <div id="generated-trick">
         <h7>generated trick</h7>
         <div>
-            <p id = "namedTrick"></p>
+          <p id="namedTrick"></p>
         </div>
-    </div>
-
-</section>
-<section class = "button">
-    <button id = "generate-trick">generate trick</button>
-</section>
-<script src="./assets/index.js"></script>
-</body>
+      </div>
+    </section>
+    <section class="button">
+      <button id="generate-trick">generate trick</button>
+    </section>
+    <script src="./assets/index.js"></script>
+  </body>
 </html>
