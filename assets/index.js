@@ -76,7 +76,7 @@ gt.addEventListener("click", function (event) {
     
 
     namedTrick = trickMapper[`${stance}_${direction}_${rotation}_${shuv}_${flip}`];
-    
+    console.log(namedTrick)
     nt.textContent = namedTrick;
     pst.textContent = stance;
     pd.textContent = direction;
