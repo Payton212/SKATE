@@ -1,105 +1,63 @@
+# SKATE
 
-  ## Title
-         SKATE
- 
-          
-## License
-![Static Badge](https://img.shields.io/badge/License-%20MIT%20License-red)
+## Table of Contents
 
-   
-  ## Table of Contents
-  [checklist to be completed](#checklist)
+1. [Description](#description)
+2. [Checklist](#checklist)
+3. [Contact](#contact)
+4. [License](#license)
 
-[Description of the app](#description)
+## Description
 
+As a user, I want to be presented with a group of settings to configure, including:
 
-[Installation of the app](#installation)
+- Difficulty
+- Obstacles I want to include
+- Whether there are additional players
 
+Once I select my settings, I want to be taken to a separate page where I can:
 
-[Usage of app](#usage)
+1. View a summary of my selected settings.
+2. See several boxes that break down the trick, including a box specifying the obstacle the trick is meant to be attempted on.
 
+After clicking the "Generate Trick" button, I want to receive:
 
-[License Badge](#license)
-
-
-[license section](#license-section)
-
-
-[test](#test)
-
-
-[Guidlines for the app](#guide-lines)
+- The name of a trick.
+- A list of basic tricks that combine to create the trick.
+- The obstacle where the trick should be attempted.
 
 
-[Contact information](#contact)
-         
 ## Checklist
 
-- [] users are prompted with a settings page to choose what difficulty obstacles and how many players will be skating
+- [ ] Users are presented with a settings page where they can choose:  
+  - **Difficulty** (easy, medium, hard)  
+  - **Obstacles** (flat ground, hubba, ledge, flat bar, manual pad, mini ramp, euro gap)  
+  - **Number of players** skating  
 
-- [] difficulties (easy, medium, hard) 
+- [ ] **Obstacles:**  
+  - All tricks possible on flat ground will also be possible on obstacles like the euro gap, A-frame, stairs, etc.
 
-- [] obstacles (flat ground, hubba, ledge, flat bar, manual pad, mini ramp, euro,)
-   it should be noted that all tricks that are possible on flat ground will be possible on the euro and other similar obstacles like an  A-Frame or stairs etc.
+- [ ] Based on the selected settings, users can choose the type of game they want to play:  
+  - **Game of SKATE**  
+  - **Practice**  
 
-- [] based on the selected settings a user will now be given the option to choose what kind of game they will be playing(game of skate,      practice)  
+- [ ] **Practice Mode:**  
+  - Users generate a trick based on their selected settings.  
+  - If obstacles are included, the algorithm will consider them when generating a trick to be attempted on the specified obstacle.
 
-- [] if a user chooses to practice (this is what we're building right now) they then generate a trick and a trick is generated, if they chose obstacles the algorithm will add that into consideration and generate a trick to be done on the obstacle
+- [ ] Users can mark tricks as missed. Missed tricks will be added to a **Missed Tricks** array and stored in local storage.
 
-- [] users will be allowed to mark if they miss the trick and have that trick put into an array of missed tricks to be stored in local storage
+- [ ] If missed tricks are stored in local storage, users can practice only those missed tricks:  
+  - The generated tricks will come exclusively from the **Missed Tricks** array.  
+  - If the user logs a trick as landed, it will be removed from the **Missed Tricks** array.
 
-- [] once they have missed tricks in local storage they can then practice missed tricks and the tricks from the missed tricks array will then be the only tricks to be generated and if they log the trick as landed the trick will be deleted from the missed tricks array
+- [ ] Add an option to **delete missed tricks**, clearing the **Missed Tricks** array from local storage.
 
-- [] add a delete missed tricks to clear the missed tricks array from local storage 
+## Contact
 
-    
- ## Description
-        as a user i want to be prompted with a group of settings including (difficulty what obstacles i wish to use and if there are additional players or not) and after the settings are chosen i am then taken to a seperate page where i can see my listed settings and several boxes brealing down the trick along with one that tells what obstacle the trick is meant to be attempted on. after clicking the generate trick button I am then given a trick with a name what basic tricks create that  trick and an obstacle I am to attempt the trick on
+- payton212
+- payton_212@icloud.com
 
-        
-          - the reaoson I built this is to have a fun project to work on that where i am familiar with the hobby and can use everytime i skate
-          - this will help with boredom at the skate park and creativity issues when stuck on what to try or to try to learn
-          
+## License
 
-    
-  ## Installation
-
-          - it will be a published website 
-           
-
-    
-  ## Usage
-
-          - any time you are at a skatepark anad want something to do
-
-
-
-
-
-
-
-        
- 
-## License Section
- - I am using the MIT license
-             
-        - https://mit-license.org
-
-     
-
-
-     
-  ## Test
-          - start a game with the desired settings and generate a trick
-
-     
- ## Guide Lines
-          - just have fun with it 
-
-    
-  ## Contact
-
-          - payton212
-
-          -payton_212@icloud.com
-
+![Static Badge](https://img.shields.io/badge/License-%20MIT%20License-red)
