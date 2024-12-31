@@ -15,206 +15,390 @@ const pr = document.getElementById("rotation");
 const pKH = document.getElementById("K/H");
 const ps = document.getElementById("shuv");
 
-skateConfig = {
-  easy: {
-    stances: ["regular", "fakie"],
-    directions: ["frontside", "backside"],
-    flips: ["kickflip", "heelflip", "none", "none"],
-    rotations: ["180", "none"],
-    shuvs: ["180", "none"],
-  },
-  medium: {
-    stances: ["regular", "fakie"],
-    directions: ["frontside", "backside"],
-    flips: ["kickflip", "heelflip", "none"],
-    rotations: ["180", "none"],
-    shuvs: ["180", "none"],
-  },
-  hard: {},
+
+const Stance = {
+  Regular: 'Regular',
+  Fakie: 'Fakie',
+  Nollie: 'Nollie',
+  Switch: 'Switch',
 };
-const trickMapper = {
-  // stance_direction_rotation_shuv_flip
-  'regular_frontside_180_none_none':'front 180',
-    'regular_frontside_none_180_none':'front shuv',
-    'regular_backside_180_none_none' :'back 180',
-    'regular_backside_none_180_none' :'pop shuv',
-    'fakie_frontside_180_none_none'  :'frontside half cab',
-    'fakie_frontside_none_180_none'  :'fakie front shuv',
-    'fakie_backside_180_none_none'   :'half cab',
-    'fakie_backside_none_180_none'   :'fakie pop shuv',
-    'fakie_none_none_none_kickflip'  :'fakie kickflip',
-    'regular_none_none_none_kickflip':'kickflip',
-    'fakie_none_none_none_heelflip'  :'fakie heelflip',
-    'regular_none_none_none_heelflip':'heelflip',
-    'regular_frontside_180_none_kickflip':'frontside flip',
-    'fakie_frontside_180_none_kickflip':'fakie frontside flip',
-    'regular_backside_180_none_kickflip':'backside flip',
-    'fakie_backside_180_none_kickflip':'half cab flip',
-    'regular_frontside_180_none_heelflip':'frontside heel',
-    'fakie_frontside_180_none_heelflip':'fakie front heel',
-    'fakie_backside_180_none_heelflip':'half cab heel',
-    'regular_backside_180_none_heelflip':'backside heelflip',
-    'regular_backside_none_180_kickflip':'varial flip',
-    'regular_backside_none_180_heelflip':'inward heel',
-    'regular_frontside_none_180_kickflip':'hard flip',
-    'regular_frontside_none_180_heelflip':'varial heel',
-    'fakie_backside_none_180_kickflip':'fakie varial flip',
-    'fakie_backside_none_180_heelflip':'fakie inward heel',
-    'fakie_frontside_none_180_kickflip':'fakie hard flip',
-    'fakie_frontside_none_180_heelflip':'fakie varial heel',
-    'regular_backside_180_180_none':'big spin',
-    'regular_frontside_180_180_none':'frontside big spin',
-    'fakie_backside_180_180_none':'fakie big spin',
-    'fakie_frontside_180_180_none':'fakie frontside big spin',
+const Direction = {
+  Frontside:'Frontside',
+  Backside: 'Backside',
+  None: 'None',
 };
-let completedTricks = [];
-let namedTrick;
+const Flip = {
+  Kickflip: 'Kickflip',
+  Heelflip: 'Heelflip',
+  None: 'None',
+};
+const BodyRotation = {
+  180: '180',
+  360: '360',
+  0:'none',
+};
+const ShuvRotation = {
+  180: '180',
+  360: '360',
+  0: 'none',
+};
+const Difficulty = {
+  EASY: 'easy',
+  MEDIUM: 'medium',
+  HARD: 'hard',
+};
+const Obstacles = {
+  FlatGround: 'flat ground',
+  Stairs: 'stairs',
+  Euro: 'euro',
+  FlatBar: 'flat bar',
+  DownRail: 'down rail',
+  Hubba: 'hubba',
+  MannyPad: 'manny pad',
+  MiniRamp: 'mini ramp',
+};
+const ListOfTricks = [
+  {
+    name: "ollie",
+    config: {
+      stance: Stance.Regular,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "pop shuv",
+    config: {
+      stance: Stance.Regular,
+      direction: Direction.Backside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "front shuv",
+    config: {
+      stance: Stance.Regular,
+      direction: Direction.Frontside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "back 180",
+    config: {
+      stance: Stance.Regular,
+      directon: Direction.Backside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "front 180",
+    config: {
+      stance: Stance.Regular,
+      directon: Direction.Frontside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "kickflip",
+    config: {
+      stance: Stance.Regular,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Kickflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "heelflip",
+    config: {
+      stance: Stance.Regular,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Heelflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie ollie",
+    config: {
+      stance: Stance.Fakie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie pop shuv",
+    config: {
+      stance: Stance.Fakie,
+      direction: Direction.Backside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie front shuv",
+    config: {
+      stance: Stance.Fakie,
+      direction: Direction.Frontside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie back 180",
+    config: {
+      stance: Stance.Fakie,
+      directon: Direction.Backside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie front 180",
+    config: {
+      stance: Stance.Fakie,
+      directon: Direction.Frontside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie kickflip",
+    config: {
+      stance: Stance.Fakie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Kickflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "fakie heelflip",
+    config: {
+      stance: Stance.Fakie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Heelflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.EASY,
+  },
+  {
+    name: "nollie",
+    config: {
+      stance: Stance.Nollie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie pop shuv",
+    config: {
+      stance: Stance.Nollie,
+      direction: Direction.Backside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie front shuv",
+    config: {
+      stance: Stance.Nollie,
+      direction: Direction.Frontside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie back 180",
+    config: {
+      stance: Stance.Nollie,
+      directon: Direction.Backside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie front 180",
+    config: {
+      stance: Stance.Nollie,
+      directon: Direction.Frontside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie kickflip",
+    config: {
+      stance: Stance.Nollie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Kickflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "nollie heelflip",
+    config: {
+      stance: Stance.Nollie,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Heelflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch ollie",
+    config: {
+      stance: Stance.Switch,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch pop shuv",
+    config: {
+      stance: Stance.Switch,
+      direction: Direction.Backside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch front shuv",
+    config: {
+      stance: Stance.Switch,
+      direction: Direction.Frontside,
+      shuvRotation: 180,
+      bodyRotation: 0,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch back 180",
+    config: {
+      stance: Stance.Switch,
+      directon: Direction.Backside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch front 180",
+    config: {
+      stance: Stance.Switch,
+      directon: Direction.Frontside,
+      shuvRotation: 0,
+      bodyRotation: 180,
+      flip: Flip.None,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch kickflip",
+    config: {
+      stance: Stance.Switch,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Kickflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+  {
+    name: "switch heelflip",
+    config: {
+      stance: Stance.Switch,
+      direction: Direction.None,
+      shuvRotation: 0,
+      bodyRotation: 0,
+      flip: Flip.Heelflip,
+    },
+    obstacles: [Obstacles.FlatGround, Obstacles.Stairs, Obstacles.Euro],
+    difficulty: Difficulty.MEDIUM,
+  },
+];
+
+
 
 gt.addEventListener("click", function (event) {
   event.preventDefault();
-  if (dEasy.checked === true) {
-    let { stance, direction, rotation, shuv, flip } = easy(skateConfig);
-
-    namedTrick =
-      trickMapper[`${stance}_${direction}_${rotation}_${shuv}_${flip}`];
-    
-    nt.textContent = namedTrick;
-    pst.textContent = stance;
-    pd.textContent = direction;
-    pr.textContent = rotation;
-    ps.textContent = shuv;
-    pKH.textContent = flip;
-  } else if (dMedium.checked === true) {
-  
-    let { stance, direction, rotation, shuv, flip } = medium(skateConfig);
-    console.log(completedTricks);
-
-    namedTrick =
-      trickMapper[`${stance}_${direction}_${rotation}_${shuv}_${flip}`];
-    
-    nt.textContent = namedTrick;
-    pst.textContent = stance;
-    pd.textContent = direction;
-    pr.textContent = rotation;
-    ps.textContent = shuv;
-    pKH.textContent = flip;
-
-    completedTricks.push({
-      stance: randomStance,
-      direction: randomDirection,
-      rotation: randomRotation,
-      shuv: randomShuvs,
-      flip: randomFlip,
-    });
-  } else {
-    hard();
-  }
+  console.log('click');
 });
-
-function easy(skateConfig) {
-  if (completedTricks.length >= 12) {
-    return `all tricks generated`;
-  }
-  return easyGenerateUniqueSkateConfig(skateConfig.easy);
-}
-
-function medium(skateConfig) {
-  if (completedTricks.length >= 32) {
-    return `all tricks generated`;
-  }
-  return mediumGenerateUniqueSkateConfig(skateConfig.medium);
-}
-
-function hard() {}
-
-function gRandom(skateConfig) {
-  return skateConfig[Math.floor(Math.random() * skateConfig.length)];
-}
-
-function easyGenerateUniqueSkateConfig(config) {
-  let randomConfig;
-  do {
-    randomConfig = easyRandomGenerator(config);
-  } while (checkIfTrickHasBeenDone(randomConfig));
-
-  return randomConfig;
-}
-
-function easyRandomGenerator(config) {
-  randomStance = gRandom(config.stances);
-  randomDirection = gRandom(config.directions);
-  randomRotation = gRandom(config.rotations);
-  randomFlip = gRandom(config.flips);
-  // Determine shuv based on rotation
-  if (randomFlip !== "none") {
-    randomShuvs = "none";
-    randomRotation = "none";
-    randomDirection = "none";
-  } else if (randomFlip === "none" && randomRotation === "none") {
-    randomShuvs = "180";
-  } else if (randomFlip === "none" && randomRotation === "180") {
-    randomShuvs = "none";
-  }
-  completedTricks.push({
-    stance: randomStance,
-    direction: randomDirection,
-    rotation: randomRotation,
-    shuv: randomShuvs,
-    flip: randomFlip,
-  });
-  return {
-    stance: randomStance,
-    direction: randomDirection,
-    rotation: randomRotation,
-    shuv: randomShuvs,
-    flip: randomFlip,
-  };
-}
-function mediumGenerateUniqueSkateConfig(config) {
-  let randomConfig;
-  do {
-    randomConfig = mediumRandomGenerator(config);
-  } while (checkIfTrickHasBeenDone(randomConfig));
-
-  return randomConfig;
-}
-
-function mediumRandomGenerator(config) {
-  randomStance = gRandom(config.stances);
-  randomDirection = gRandom(config.directions);
-  randomRotation = gRandom(config.rotations);
-  randomFlip = gRandom(config.flips);
-  randomShuvs = gRandom(config.shuvs);
-  // Determine shuv based on rotation
-
-  if (randomShuvs === "none" && randomRotation === "none") {
-    randomDirection = "none";
-    randomFlip != "none";
-  }
-  if (randomShuvs !== "none" && randomRotation !== "none") {
-    randomFlip = "none";
-  }
-
-  return {
-    stance: randomStance,
-    direction: randomDirection,
-    rotation: randomRotation,
-    shuv: randomShuvs,
-    flip: randomFlip,
-  };
-}
-
-function checkIfTrickHasBeenDone(randomConfig) {
-  return completedTricks.some(
-    (trick) =>
-      trick.flip === randomConfig.randomFlip &&
-      trick.stance === randomConfig.randomStance &&
-      trick.direction === randomConfig.randomDirection &&
-      trick.rotation === randomConfig.randomRotation &&
-      trick.shuv === randomConfig.randomShuvs &&
-      (trick.direction === "none" &&
-      trick.flip === "none" &&
-      trick.rotation === "none" &&
-      trick.shuv === "none")
-  );
-}
